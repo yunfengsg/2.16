@@ -2,7 +2,6 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-# Example Lambda function
 resource "aws_lambda_function" "example" {
   function_name = "yunfengsg-topmovies-api"
   runtime       = "nodejs18.x"
@@ -12,14 +11,13 @@ resource "aws_lambda_function" "example" {
   filename = "lambda_function_payload.zip" # Replace with your Lambda ZIP file
 }
 
-# IAM Role for Lambda execution
 resource "aws_iam_role" "lambda_exec" {
   name = "lambda_exec_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      {
+{
         Action    = "sts:AssumeRole"
         Effect    = "Allow"
         Principal = {
@@ -45,14 +43,14 @@ resource "aws_iam_role_policy" "lambda_policy" {
   })
 }
 
-# CloudWatch Alarm for Lambda Errors
+
 resource "aws_cloudwatch_metric_alarm" "lambda_error_alarm" {
   alarm_name          = "LambdaErrorAlarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "Errors"
   namespace           = "AWS/Lambda"
-  period              = 300
+  period              = 10
   statistic           = "Sum"
   threshold           = 1
 
@@ -60,7 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_error_alarm" {
   actions_enabled   = true
 
   alarm_actions = [
-    "arn:aws:sns:us-east-1:123456789012:example-topic" # Replace with a valid SNS topic ARN
+    "arn:aws:cloudwatch:ap-southeast-1:255945442255:alarm:yyf-info-count-breach" 
   ]
 
   dimensions = {
